@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Confrérie Rosée - Guilde Dofus communautaire</title>
+    <meta name="description" content="Bienvenue sur le site officiel de La Confrérie Rosée, guilde Dofus conviviale axée sur l'entraide, les sorties donjons et la bonne humeur sur le serveur Dakal.">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Particle Overlay Canvas -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- Header & Navigation -->
+    <header class="nav-header">
+        <div class="logo-section">
+            <img class="logo-crest-img" src="assets/guild_banner.png" alt="Logo La Confrérie Rosée">
+        </div>
+
+        <nav>
+            <ul class="nav-links" id="nav-links">
+                <li class="nav-item"><button class="nav-btn active" data-tab="tab-home">Accueil</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-about">La guilde</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-members">Roulette</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-events">Calendrier</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-gallery">Galerie & Jardin</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-guide">Livre d'Or</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-hall">Hall of Fame</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-recruit">Recrutement</button></li>
+                <li class="nav-item"><button class="nav-btn" data-tab="tab-auth" id="nav-btn-auth"><i class="fas fa-user-circle"></i> Connexion</button></li>
+                <li class="nav-item" id="nav-item-admin" style="display: none;"><button class="nav-btn" data-tab="tab-admin"><i class="fas fa-shield-alt"></i> Admin</button></li>
+            </ul>
+        </nav>
+
+        <div class="nav-socials">
+            <a href="https://discord.gg/XyA6SSfg" target="_blank" class="social-icon-btn" title="Rejoindre notre Discord"><i class="fab fa-discord"></i></a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu principal">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="app-container">
+
+        <!-- ==============================================
+             SECTION ACCUEIL (HOME)
+             ============================================== -->
+        <section class="tab-content active" id="tab-home">
+            <!-- Hero Shield Banner -->
+            <div class="hero-banner">
+                <div class="main-shield-wrapper">
+                    <img class="guild-shield-large" src="assets/guild_banner.png" alt="Logo La Confrérie Rosée">
+                </div>
+                <p class="welcome-subtitle">Une guilde Dofus unie par l'entraide, la convivialité et la passion du jeu. Que tu sois un aventurier aguerri ou une jeune pousse, tu trouveras ici une seconde famille.</p>
+                
+                <div class="btn-group-horizontal">
+                    <button class="btn-img-action" data-target-tab="tab-recruit" aria-label="Rejoindre la guilde">
+                        <img src="assets/btn_recruit.png" alt="Rejoindre la guilde">
+                    </button>
+                    <button class="btn-img-action" data-target-tab="tab-events" aria-label="Nos événements">
+                        <img src="assets/btn_events.png" alt="Nos événements">
+                    </button>
+                    <button class="btn-img-action" data-target-tab="tab-about" aria-label="Nos membres">
+                        <img src="assets/btn_members.png" alt="Nos membres">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Home Content Grid -->
+            <div class="home-grid">
+                <!-- Qui Sommes-Nous Card -->
+                <div class="card-about-parchment">
+                    
+                    <h3 class="card-title-medieval">Qui sommes-nous ?</h3>
+                    <div class="about-summary-container">
+                        <p class="about-desc">La Confrérie Rosée est une guilde créée par des joueurs passionnés souhaitant réunir une communauté mature, bienveillante et active. Nous croyons en l'entraide, le respect et la bonne humeur. Notre objectif : progresser ensemble tout en s'amusant !</p>
+                        
+                        <div class="values-icon-grid">
+                            <div class="value-icon-box">
+                                <img class="value-icon-shield" src="assets/shield_rose.png" alt="Blason Entraide">
+                                <h4 class="value-title">Entraide</h4>
+                                <p class="value-desc">Toujours là les uns pour les autres</p>
+                            </div>
+                            <div class="value-icon-box">
+                                <img class="value-icon-shield" src="assets/shield_mask.png" alt="Blason Convivialité">
+                                <h4 class="value-title">Convivialité</h4>
+                                <p class="value-desc">Une ambiance chaleureuse</p>
+                            </div>
+                            <div class="value-icon-box">
+                                <img class="value-icon-shield" src="assets/shield_keys.png" alt="Blason Progression">
+                                <h4 class="value-title">Progression</h4>
+                                <p class="value-desc">Donjons, quêtes, succès</p>
+                            </div>
+                            <div class="value-icon-box">
+                                <img class="value-icon-shield" src="assets/shield_flower.png" alt="Blason Événements">
+                                <h4 class="value-title">Événements</h4>
+                                <p class="value-desc">Des activités régulières</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actualités Sidebar -->
+                <div class="card-news-parchment">
+                    <h3 class="card-title-medieval">Actualités</h3>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <div class="news-meta">
+                                <span class="news-tag">Événement</span>
+                                <span class="news-date">12 Mai</span>
+                            </div>
+                            <h4 class="news-title">Tournoi de la Rose Écarlate</h4>
+                            <p class="news-summary">Préparez vos équipes ! Le tournoi 3v3 inter-membres revient le 24 mai sur le serveur. Récompenses légendaires à la clé !</p>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-meta">
+                                <span class="news-tag">Concours</span>
+                                <span class="news-date">08 Mai</span>
+                            </div>
+                            <h4 class="news-title">Concours de skins floral</h4>
+                            <p class="news-summary">Montrez votre plus beau style sur le thème "Fleurs et Nature" et tentez de remporter le titre de Maître du Style.</p>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-meta">
+                                <span class="news-tag">Succès</span>
+                                <span class="news-date">05 Mai</span>
+                            </div>
+                            <h4 class="news-title">Sortie Donjon : Comte Harebourg</h4>
+                            <p class="news-summary">Une sortie est programmée ce week-end pour aider nos membres à valider ce donjon mythique. Inscrivez-vous !</p>
+                        </div>
+                    </div>
+                    <div class="card-bottom-btn">
+                        <button class="btn-img-action" data-target-tab="tab-events" aria-label="Toutes les actualités">
+                            <img src="assets/btn_news.png" alt="Toutes les actualités">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Highlights Row (3 columns) -->
+            <div class="bottom-grid-3">
+                <!-- Calendar Card -->
+                <div class="card-bottom-row-parchment">
+                    <h3 class="card-title-medieval">Événements</h3>
+                    <div class="events-mini-list">
+                        <div class="event-mini-item">
+                            <div class="event-mini-date">
+                                <span class="day">24</span>
+                                <span class="month">Mai</span>
+                            </div>
+                            <div class="event-mini-details">
+                                <h4>Tournoi 3v3</h4>
+                                <p><i class="far fa-clock"></i> 20h00 - Arène</p>
+                            </div>
+                        </div>
+                        <div class="event-mini-item">
+                            <div class="event-mini-date">
+                                <span class="day">31</span>
+                                <span class="month">Mai</span>
+                            </div>
+                            <div class="event-mini-details">
+                                <h4>Sortie Comte Harebourg</h4>
+                                <p><i class="far fa-clock"></i> 21h00 - Frigost III</p>
+                            </div>
+                        </div>
+                        <div class="event-mini-item">
+                            <div class="event-mini-date">
+                                <span class="day">07</span>
+                                <span class="month">Juin</span>
+                            </div>
+                            <div class="event-mini-details">
+                                <h4>Chasse au Trésor géante</h4>
+                                <p><i class="far fa-clock"></i> 19h00 - Astrub</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bottom-btn">
+                        <button class="btn-img-action" data-target-tab="tab-events" aria-label="Calendrier complet">
+                            <img src="assets/btn_calendar.png" alt="Calendrier complet">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member of the Month -->
+                <div class="card-bottom-row-parchment">
+                    <h3 class="card-title-medieval">Membre à l'honneur</h3>
+                    <div class="honoured-member-box">
+                        <div class="honoured-avatar-frame frame-style-rosevent">
+                            <span class="honoured-crown">👑</span>
+                            <img class="honoured-avatar" src="assets/rosalya_avatar.png" alt="Avatar de Rosalya">
+                        </div>
+                        <h4 class="honoured-name">Rosalya</h4>
+                        <span class="honoured-title">Gardienne des Pétales</span>
+                        <p class="honoured-quote">"Toujours présente pour aider les autres, organiser les sorties donjons et embellir le Discord. Un grand merci pour son dévouement !"</p>
+                    </div>
+                </div>
+
+                <!-- Hall of Fame Card -->
+                <div class="card-bottom-row-parchment">
+                    <h3 class="card-title-medieval">Hall of Fame</h3>
+                    <div class="hall-mini-list">
+                        <div class="hall-mini-item">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                                <span class="hall-mini-title">🏆 Meilleur donjon</span>
+                                <h4 class="hall-mini-winner">Team Sramy</h4>
+                            </div>
+                            <span class="hall-mini-reward">Harebourg - 48m 32s</span>
+                        </div>
+                        <div class="hall-mini-item">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                                <span class="hall-mini-title">👗 Concours Skins</span>
+                                <h4 class="hall-mini-winner">Lysandra</h4>
+                            </div>
+                            <span class="hall-mini-reward">Thème : Floral 🌸</span>
+                        </div>
+                        <div class="hall-mini-item">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                                <span class="hall-mini-title">💰 Plus gros donateur</span>
+                                <h4 class="hall-mini-winner">Rosalya</h4>
+                            </div>
+                            <span class="hall-mini-reward">12 000 000 K 🪙</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recruitment CTA Banner -->
+            <div class="cta-banner">
+                <h2>Prêt à rejoindre l'aventure ?</h2>
+                <p>La Confrérie Rosée ouvre ses portes aux aventuriers de tous horizons ! Remplis ton parchemin de candidature dès maintenant.</p>
+                <div class="btn-medieval-wrapper">
+                    <button class="btn-img-action" data-target-tab="tab-recruit" aria-label="Postuler dans la guilde">
+                        <img src="assets/btn_join_guild.png" alt="Rejoindre la guilde">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION À PROPOS (ABOUT & VALUES)
+             ============================================== -->
+        <section class="tab-content" id="tab-about">
+            <div class="history-layout">
+                <!-- History Image -->
+                <div class="history-img-wrapper">
+                    <img src="assets/history_parchment.png" alt="Naissance de la Confrérie" class="history-parchment-img">
+                </div>
+
+                <!-- Values Description -->
+                <div class="card-values-parchment">
+                    <h2 class="card-title-medieval">Nos Valeurs Sacrées</h2>
+                    <div class="values-detailed-list">
+                        <div class="value-detailed-item">
+                            <div class="value-detail-text">
+                                <h3>L'Entraide inconditionnelle</h3>
+                                <p>Un membre de la Confrérie ne combat jamais seul. Qu'il s'agisse de récolter des ressources pour une panoplie, de vaincre un boss récalcitrant ou de terminer des quêtes fastidieuses, nous nous serrons les coudes en toutes circonstances.</p>
+                            </div>
+                        </div>
+                        <div class="value-detailed-item">
+                            <div class="value-detail-text">
+                                <h3>La Convivialité avant tout</h3>
+                                <p>Le jeu doit rester un plaisir. Chez nous, pas d'obligations de connexion strictes ni de pression d'optimisation. Nous aimons discuter sur Discord, plaisanter et passer de bons moments ensemble dans le respect mutuel.</p>
+                            </div>
+                        </div>
+                        <div class="value-detailed-item">
+                            <div class="value-detail-text">
+                                <h3>Une Progression Harmonieuse</h3>
+                                <p>Nous accueillons tous les niveaux. Nous prenons plaisir à faire découvrir le jeu aux débutants (nos jeunes rosettes) tout en proposant du contenu endgame (songes, succès complexes) pour les vétérans de la guilde.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Annuaire de la Confrérie -->
+            <h3 class="gallery-section-title" style="margin-top: 50px;">Annuaire de la Confrérie</h3>
+            <div id="view-directory">
+                <!-- Filters Controls -->
+                <div class="members-controls">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="member-search" placeholder="Rechercher un membre ou une classe...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="filter-select" id="member-rank-filter">
+                            <option value="all">Tous les rangs</option>
+                            <option value="Meneuse">Meneuse</option>
+                            <option value="Rosy Diamond">Rosy Diamond</option>
+                            <option value="RosEvent">RosEvent</option>
+                            <option value="Rouletteur">Rouletteur</option>
+                            <option value="Veilleur Solidaire">Veilleur Solidaire</option>
+                            <option value="Bâtisseur de Fortune">Bâtisseur de Fortune</option>
+                            <option value="P'tite Rosette">P'tite Rosette</option>
+                        </select>
+                        <select class="filter-select" id="member-class-filter">
+                            <option value="all">Toutes les classes</option>
+                            <option value="Cra">Crâ</option>
+                            <option value="Iop">Iop</option>
+                            <option value="Feca">Féca</option>
+                            <option value="Eniripsa">Éniripsa</option>
+                            <option value="Sacrieur">Sacrieur</option>
+                            <option value="Sadida">Sadida</option>
+                            <option value="Sram">Sram</option>
+                            <option value="Pandawa">Pandawa</option>
+                            <option value="Ecaflip">Écaflip</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Container for member cards -->
+                <div id="members-container" class="members-grid">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION MEMBRES (MEMBERS)
+             ============================================== -->
+        <section class="tab-content" id="tab-members">
+            <h2 class="welcome-title-accent" style="text-align: center; margin-bottom: 25px;">La Roulette des Classes</h2>
+
+            <!-- Roulette View -->
+            <div id="view-roulette">
+                <div class="roulette-layout">
+                    <!-- Left Panel: Classes list -->
+                    <div class="roulette-left-panel">
+                        <div class="roulette-panel-header">
+                            <h3>CLASSES EN JEU</h3>
+                            <span class="checked-count" id="checked-classes-count">19 / 19</span>
+                        </div>
+                        <div class="action-buttons-row">
+                            <button id="btn-check-all" class="btn-small-medieval">TOUT COCHER</button>
+                            <button id="btn-uncheck-all" class="btn-small-medieval">TOUT DÉCOCHER</button>
+                        </div>
+                        <div class="classes-checkbox-grid" id="classes-checkbox-grid">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: The wheel -->
+                    <div class="roulette-right-panel">
+                        <button id="btn-sound-toggle" class="btn-sound-toggle active" title="Activer/Désactiver le son">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        
+                        <div class="wheel-outer-wrapper">
+                            <div class="wheel-pointer"></div>
+                            <div class="wheel-canvas-container">
+                                <canvas id="wheel-canvas" width="500" height="500"></canvas>
+                                <button id="btn-spin" class="btn-spin">SPIN</button>
+                            </div>
+                        </div>
+
+                        <!-- Result display -->
+                        <div id="roulette-result" class="roulette-result-display">
+                            <div class="result-box">
+                                <span class="result-label">TIRAGE VALIDÉ :</span>
+                                <h3 id="result-class-name">...</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION ÉVÉNEMENTS (EVENTS)
+             ============================================== -->
+        <section class="tab-content" id="tab-events">
+            <div class="events-calendar-layout">
+                <!-- Main Events List -->
+                <div>
+                    <h2 class="welcome-title-accent" style="margin-bottom: 25px;">Calendrier de la Confrérie</h2>
+                    <div class="events-list-full" id="events-container-full">
+                        <!-- Dynamically generated events go here -->
+                    </div>
+
+                    <!-- Section Actualités de la Guilde -->
+                    <div class="guild-news-section" style="margin-top: 50px;">
+                        <h2 class="welcome-title-accent" style="margin-bottom: 25px;">Nouveautés & Actualités</h2>
+                        <div class="guild-news-feed">
+                            <!-- Article 1: Supabase & Auth -->
+                            <div class="news-article-card">
+                                <div class="news-article-header">
+                                    <span class="news-article-tag tag-feature">Nouveauté</span>
+                                    <span class="news-article-date">04 Juin 2026</span>
+                                </div>
+                                <h3 class="news-article-title">Déploiement du Nouveau Site de la Confrérie ! 🌸</h3>
+                                <p class="news-article-body">
+                                    Le site officiel de La Confrérie Rosée franchit un nouveau cap ! Grâce à l'intégration de technologies cloud sécurisées, chaque aventurier dispose désormais de son espace personnel :
+                                </p>
+                                <ul style="margin: 10px 0; padding-left: 20px; color: var(--text-light); font-size: 0.95rem;">
+                                    <li style="margin-bottom: 6px; list-style-type: disc;"><strong>Espace Membre :</strong> Inscrivez-vous et paramétrez votre personnage (classe, niveau, succès, alignement) en temps réel.</li>
+                                    <li style="margin-bottom: 6px; list-style-type: disc;"><strong>Calendrier interactif :</strong> Consultez les sorties donjons et signalez votre participation en un clic.</li>
+                                    <li style="margin-bottom: 6px; list-style-type: disc;"><strong>Livre d'Or & Roulette :</strong> Remerciez vos compagnons d'armes et faites vos tirages de classes en direct.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Article 2: Custom Borders -->
+                            <div class="news-article-card">
+                                <div class="news-article-header">
+                                    <span class="news-article-tag tag-update">Mise à jour</span>
+                                    <span class="news-article-date">04 Juin 2026</span>
+                                </div>
+                                <h3 class="news-article-title">Bordures de Rangs & Tiroir de Personnalisation 🎨</h3>
+                                <p class="news-article-body">
+                                    Vos exploits et votre grade brillent enfin autour de votre portrait ! Un tout nouveau système de bordures d'avatar CSS animées a été intégré. Rendez-vous dans <strong>« Mon Espace »</strong>, cliquez sur le bouton de personnalisation sous votre avatar pour ouvrir le tiroir des cadres et équiper les styles débloqués par votre rang.
+                                </p>
+                            </div>
+
+                            <!-- Article 3: Tournament -->
+                            <div class="news-article-card">
+                                <div class="news-article-header">
+                                    <span class="news-article-tag tag-event">Événement</span>
+                                    <span class="news-article-date">24 Mai 2026</span>
+                                </div>
+                                <h3 class="news-article-title">Retour sur le Tournoi de la Rose Écarlate ⚔️</h3>
+                                <p class="news-article-body">
+                                    Félicitations à l'ensemble des équipes pour leur participation au tournoi 3v3 de la guilde ! Les combats ont été légendaires et les vainqueurs ont remporté leurs bourses de kamas. Les souvenirs de l'événement sont dès à présent visibles dans l'onglet <strong>« Galerie & Jardin »</strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rules and Information Sidebar -->
+                <div class="event-info-sidebar">
+                    <!-- Guidelines Card -->
+                    <div class="card-parchment">
+                        <div class="corner-ornament-tr"></div>
+                        <div class="corner-ornament-bl"></div>
+                        <div class="corner-ornament-br"></div>
+                        
+                        <h3 class="card-title-medieval">Règles des Sorties</h3>
+                        <div class="rules-scroll">
+                            <p><strong>1. Ponctualité :</strong> Merci d'arriver 10 minutes avant le début de l'événement. En cas de retard, prévenez un organisateur sur Discord.</p>
+                            <p><strong>2. Préparation :</strong> Pensez à vérifier vos équipements, vos clés de donjons ou vos consommables (pains, potions) avant le départ.</p>
+                            <p><strong>3. Esprit d'équipe :</strong> Nos sorties sont là pour s'amuser et s'entraider. Les critiques agressives ou le manque de patience envers les débutants ne sont pas tolérés.</p>
+                            <p><strong>4. Discord :</strong> La présence sur les salons vocaux est fortement conseillée pour les donjons complexes afin de mieux coordonner nos tours de jeu !</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION GALERIE & JARDIN DES SOUVENIRS
+             ============================================== -->
+        <section class="tab-content" id="tab-gallery">
+            <!-- Skin Competitions Gallery -->
+            <h2 class="gallery-section-title">Galerie des Skins Gagnants</h2>
+            <div class="skins-grid" id="skins-container">
+                <!-- Dynamically generated skins go here -->
+            </div>
+
+            <!-- Garden of Memories (Screenshots) -->
+            <h2 class="gallery-section-title">Le Jardin des Souvenirs</h2>
+            <p style="margin-bottom: 25px; opacity: 0.85; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Les plus beaux instants de la Confrérie figés dans le temps. Donjons victorieux, mariages de guilde et rassemblements mémorables.
+            </p>
+            <div class="garden-grid" id="garden-container">
+                <!-- Dynamically generated screenshots go here -->
+            </div>
+
+            <!-- Lightbox Modal for Zooming -->
+            <div class="lightbox-modal" id="lightbox-modal">
+                <div class="lightbox-content">
+                    <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
+                    <img class="lightbox-img" id="lightbox-img" src="" alt="Zoom Image">
+                    <p class="lightbox-caption" id="lightbox-caption"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION LIVRE D'OR (APPRÉCIATIONS)
+             ============================================== -->
+        <section class="tab-content" id="tab-guide">
+            <h2 class="welcome-title-accent" style="text-align: center; margin-bottom: 10px;">Le Livre d'Or de la Confrérie</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto 35px auto; color: var(--text-light); opacity: 0.85;">
+                Exprimez votre gratitude envers les membres qui vous ont apporté leur aide en jeu et découvrez qui sont nos plus vaillants contributeurs ce mois-ci !
+            </p>
+
+            <div class="goldbook-layout">
+                <!-- Left Column: Leave Appreciation -->
+                <div class="goldbook-form-col">
+                    <!-- Form for logged-in users -->
+                    <div id="goldbook-form-card" class="card-parchment" style="display: none;">
+                        <h3 class="card-title-medieval" style="justify-content: center; margin-bottom: 20px;">Remercier un compagnon</h3>
+                        <form id="goldbook-appreciation-form" class="recruitment-form-grid" style="gap: 15px;">
+                            <div class="form-group-medieval">
+                                <label for="goldbook-target">Bienfaiteur (pseudo du joueur à remercier)</label>
+                                <input type="text" id="goldbook-target" class="form-input" placeholder="Pseudo exact in-game..." required>
+                            </div>
+
+                            <div class="form-group-medieval">
+                                <label>Catégories d'aide reçue (cochez tout ce qui s'applique)</label>
+                                <div class="goldbook-categories-grid">
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Aide en Donjon">
+                                        <span class="checkbox-custom"></span>
+                                        <span>⚔️ Donjon</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Prêt d'équipement">
+                                        <span class="checkbox-custom"></span>
+                                        <span>🛡️ Prêt de stuff</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Aide à l'XP">
+                                        <span class="checkbox-custom"></span>
+                                        <span>📈 Aide à l'XP</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Quêtes & Succès">
+                                        <span class="checkbox-custom"></span>
+                                        <span>📜 Quêtes & Succès</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Artisanat & Métiers">
+                                        <span class="checkbox-custom"></span>
+                                        <span>⛏️ Artisanat / Job</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Dons de ressources">
+                                        <span class="checkbox-custom"></span>
+                                        <span>🎁 Don de ressources</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Mission Guilde">
+                                        <span class="checkbox-custom"></span>
+                                        <span>🎯 Mission Guilde</span>
+                                    </label>
+                                    <label class="class-checkbox-item">
+                                        <input type="checkbox" name="help-category" value="Autre entraide">
+                                        <span class="checkbox-custom"></span>
+                                        <span>🌸 Autre entraide</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group-medieval">
+                                <label for="goldbook-message">Votre message de gratitude</label>
+                                <textarea id="goldbook-message" class="form-textarea" placeholder="Racontez votre aventure ou écrivez un petit mot..." rows="5" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-img-action" aria-label="Signer le Livre d'Or" style="margin: 15px auto 0 auto; display: block; max-width: 280px; width: 100%;">
+                                <img src="assets/btn_sign_goldbook.png" alt="Signer le Livre d'Or">
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Warning for logged-out users -->
+                    <div id="goldbook-login-warning" class="card-parchment" style="text-align: center; padding: 45px 30px;">
+                        <span style="font-size: 3.5rem;">🔒</span>
+                        <h3 class="card-title-medieval" style="justify-content: center; margin-top: 15px; border-bottom: none; padding-bottom: 0;">Parchemin verrouillé</h3>
+                        <p style="color: var(--text-dark); font-weight: 500; font-size: 0.95rem; margin: 15px auto; max-width: 280px; line-height: 1.5;">
+                            Vous devez être connecté à votre compte de guilde pour pouvoir laisser un remerciement dans le Livre d'Or.
+                        </p>
+                        <button class="btn-medieval" data-target-tab="tab-auth" style="margin-top: 10px; font-size: 0.85rem;">
+                            <i class="fas fa-sign-in-alt"></i> Se connecter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Leaderboard -->
+                <div class="goldbook-feed-col">
+                    <!-- Leaderboard -->
+                    <div class="card-parchment" style="padding: 20px 25px; height: 100%; display: flex; flex-direction: column;">
+                        <h3 class="card-title-medieval" style="justify-content: center; margin-bottom: 15px;">Tableau d'Honneur</h3>
+                        <div class="goldbook-leaderboard" id="goldbook-leaderboard">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remerciements Récents en dessous -->
+            <div class="goldbook-feed-fullwidth">
+                <div class="card-parchment" style="padding: 25px 30px;">
+                    <h3 class="card-title-medieval" style="justify-content: center; margin-bottom: 20px;">Remerciements Récents</h3>
+                    <div class="goldbook-feed" id="goldbook-feed">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION RANGS & HALL OF FAME
+             ============================================== -->
+        <section class="tab-content" id="tab-hall">
+            <h2 class="welcome-title-accent" style="text-align: center; margin-bottom: 20px;">Le Panthéon de la Confrérie</h2>
+            <p class="welcome-subtitle" style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: var(--text-light); opacity: 0.85;">
+                Découvre les figures légendaires qui ont marqué l'histoire de la Confrérie Rosée par leur dévouement, leurs exploits ou leur générosité.
+            </p>
+
+            <!-- Interactive Podium -->
+            <div class="podium-wrapper">
+                <!-- 2nd Place (Left) -->
+                <div class="podium-slot second-place">
+                    <div class="podium-character-wrapper">
+                        <div class="podium-plaque">
+                            <div class="plaque-crown">🥈</div>
+                            <div class="podium-avatar-wrapper frame-style-rosydiamond">
+                                <img class="podium-plaque-avatar" src="assets/guild_members.png" alt="Avatar de Fecator">
+                            </div>
+                            <h4 class="plaque-name">Fecator</h4>
+                            <p class="plaque-title">Légende des Succès</p>
+                            <span class="plaque-stat">15 420 Succès</span>
+                        </div>
+                        <img src="assets/podium_char2.png" class="podium-char-img" alt="Fecator - Aventurier Légendaire">
+                    </div>
+                </div>
+
+                <!-- 1st Place (Center) -->
+                <div class="podium-slot first-place">
+                    <div class="podium-character-wrapper">
+                        <div class="podium-plaque">
+                            <div class="plaque-crown">👑</div>
+                            <div class="podium-avatar-wrapper frame-style-rosevent">
+                                <img class="podium-plaque-avatar" src="assets/rosalya_avatar.png" alt="Avatar de Rosalya">
+                            </div>
+                            <h4 class="plaque-name">Rosalya</h4>
+                            <p class="plaque-title">Grande Donatrice</p>
+                            <span class="plaque-stat">12M Kamas</span>
+                        </div>
+                        <img src="assets/podium_char1.png" class="podium-char-img" alt="Rosalya - Grande Donatrice">
+                    </div>
+                </div>
+
+                <!-- 3rd Place (Right) -->
+                <div class="podium-slot third-place">
+                    <div class="podium-character-wrapper empty-slot">
+                        <div class="podium-plaque empty-plaque">
+                            <div class="plaque-crown">🥉</div>
+                            <h4 class="plaque-name">Toi ?</h4>
+                            <p class="plaque-title">Place à prendre</p>
+                            <span class="plaque-stat">Rejoins la guilde !</span>
+                        </div>
+                        <div class="empty-quest-mark">?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Hall of Fame Cards Container -->
+            <div id="hall-of-fame-detailed-container" class="hall-of-fame-list" style="margin-top: 50px;"></div>
+        </section>
+
+        <!-- ==============================================
+             SECTION RECRUTEMENT (APPLICATION FORM)
+             ============================================== -->
+        <section class="tab-content" id="tab-recruit">
+            <div class="recruitment-container">
+                <div class="parchment-scroll-rolled">
+                    <div class="scroll-roll-top"></div>
+                    <div class="scroll-roll-bottom"></div>
+
+                    <!-- Recruitment Form Header -->
+                    <div class="recruitment-intro">
+                        <h2>Parchemin d'inscription</h2>
+                        <p>Remplis ce formulaire avec soin. Nos Bras Droits étudieront ta candidature sous 24 heures en jeu ou sur Discord !</p>
+                    </div>
+
+                    <!-- Application Form -->
+                    <form class="medieval-form" id="recruitment-form">
+                        <div class="form-field">
+                            <label for="char-name">Nom de ton personnage *</label>
+                            <input type="text" id="char-name" class="form-input-medieval" required placeholder="Ex: Sramy-Dew">
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-field">
+                                <label for="char-level">Niveau de ton personnage *</label>
+                                <input type="number" id="char-level" class="form-input-medieval" required min="1" max="200" placeholder="Niveau 1 à 200">
+                            </div>
+                            <div class="form-field">
+                                <label for="discord-tag">Ton identifiant Discord</label>
+                                <input type="text" id="discord-tag" class="form-input-medieval" placeholder="Ex: lola#1234">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="char-motivation">Pourquoi veux-tu nous rejoindre ? *</label>
+                            <textarea id="char-motivation" class="form-input-medieval" rows="5" required placeholder="Parle-nous de toi, de ton parcours en jeu et de ce que tu recherches chez nous..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-medieval btn-form-submit"><i class="fas fa-feather-alt"></i> Envoyer le parchemin</button>
+                    </form>
+
+                    <!-- Success State -->
+                    <div class="form-success-card" id="form-success">
+                        <span class="success-icon-shield">🌸</span>
+                        <h3>Candidature scellée !</h3>
+                        <p>Ton parchemin a bien été remis aux officiers de la Confrérie Rosée. Nous te contacterons très vite en jeu ou sur Discord pour valider ton intégration.</p>
+                        <button type="button" class="btn-medieval" id="btn-success-reset"><i class="fas fa-undo"></i> Retourner à l'accueil</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION AUTHENTICATION & PROFILE
+             ============================================== -->
+        <section class="tab-content" id="tab-auth">
+            <div class="recruitment-container">
+                <!-- Logged Out View (Parchment Login Scroll) -->
+                <div class="parchment-scroll-rolled" id="auth-logged-out-view">
+                    <div class="scroll-roll-top"></div>
+                    <div class="scroll-roll-bottom"></div>
+
+                    <div class="recruitment-intro">
+                        <h2 id="auth-title">Connexion à la Confrérie</h2>
+                        <p id="auth-subtitle">Accédez à votre espace membre pour gérer votre personnage et vous inscrire aux activités.</p>
+                        <div id="auth-mode-indicator" style="margin-top: 15px; display: flex; flex-direction: column; align-items: center; gap: 8px;"></div>
+                    </div>
+
+                    <!-- Sign In Form -->
+                    <form class="medieval-form" id="signin-form">
+                        <div class="form-field">
+                            <label for="signin-email">Adresse Email</label>
+                            <input type="email" id="signin-email" class="form-input-medieval" required placeholder="Ex: aventurier@dofus.fr">
+                        </div>
+                        <div class="form-field">
+                            <label for="signin-password">Mot de passe</label>
+                            <input type="password" id="signin-password" class="form-input-medieval" required placeholder="Votre mot de passe">
+                        </div>
+                        <div class="btn-group-horizontal" style="margin-top: 10px;">
+                            <button type="submit" class="btn-medieval"><i class="fas fa-sign-in-alt"></i> Se Connecter</button>
+                            <button type="button" class="btn-medieval" id="btn-toggle-to-signup" style="background: transparent; color: var(--bg-burgundy); border-color: rgba(62,29,29,0.3);"><i class="fas fa-user-plus"></i> Créer un compte</button>
+                        </div>
+                    </form>
+
+                    <!-- Sign Up Form (hidden by default) -->
+                    <form class="medieval-form" id="signup-form" style="display: none;">
+                        <div class="form-group-row">
+                            <div class="form-field">
+                                <label for="signup-username">Pseudo de personnage</label>
+                                <input type="text" id="signup-username" class="form-input-medieval" required placeholder="Ex: Sramy-Dew">
+                            </div>
+                            <div class="form-field">
+                                <label for="signup-class">Classe de personnage</label>
+                                <select id="signup-class" class="form-input-medieval" required>
+                                    <option value="" disabled selected>Choisis ta classe</option>
+                                    <option value="Cra">Crâ</option>
+                                    <option value="Iop">Iop</option>
+                                    <option value="Feca">Féca</option>
+                                    <option value="Eniripsa">Éniripsa</option>
+                                    <option value="Sacrieur">Sacrieur</option>
+                                    <option value="Sadida">Sadida</option>
+                                    <option value="Sram">Sram</option>
+                                    <option value="Pandawa">Pandawa</option>
+                                    <option value="Ecaflip">Écaflip</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-field">
+                                <label for="signup-level">Niveau</label>
+                                <input type="number" id="signup-level" class="form-input-medieval" required min="1" max="200" value="200">
+                            </div>
+                            <div class="form-field">
+                                <label for="signup-email">Adresse Email</label>
+                                <input type="email" id="signup-email-input" class="form-input-medieval" required placeholder="Ex: email@dofus.fr">
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="signup-password">Mot de passe</label>
+                            <input type="password" id="signup-password-input" class="form-input-medieval" required placeholder="Minimum 6 caractères">
+                        </div>
+                        <div class="btn-group-horizontal" style="margin-top: 10px;">
+                            <button type="submit" class="btn-medieval"><i class="fas fa-user-plus"></i> Créer le compte</button>
+                            <button type="button" class="btn-medieval" id="btn-toggle-to-signin" style="background: transparent; color: var(--bg-burgundy); border-color: rgba(62,29,29,0.3);"><i class="fas fa-sign-in-alt"></i> J'ai déjà un compte</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Logged In View (Profile Dashboard) -->
+                <div class="parchment-scroll-rolled" id="auth-logged-in-view" style="display: none;">
+                    <div class="scroll-roll-top"></div>
+                    <div class="scroll-roll-bottom"></div>
+
+                    <div class="recruitment-intro">
+                        <h2>Mon Espace Aventurier</h2>
+                        <p>Gérez les informations de votre personnage. Ces données sont mises à jour en direct pour toute la guilde !</p>
+                    </div>
+
+                    <div class="about-summary-container" style="margin-bottom: 30px;">
+                        <div style="text-align: center;">
+                            <div class="honoured-avatar-frame" id="profile-avatar-container" style="width: 150px; height: 150px; margin: 0 auto 15px auto;">
+                                <img class="honoured-avatar" id="profile-avatar" src="assets/guild_crest.png" alt="Avatar">
+                            </div>
+                            <h3 class="honoured-name" id="profile-username">Pseudo</h3>
+                            <span class="honoured-title" id="profile-rank">Rang</span>
+                            <div style="margin-top: 10px;">
+                                <span class="news-tag" id="profile-role-badge" style="background: var(--bg-burgundy); color: var(--light-gold); border-color: var(--gold);">Membre</span>
+                            </div>
+                            <div class="profile-stats-summary" id="profile-stats-summary" style="margin-top: 15px; font-family: var(--font-title); font-size: 0.9rem; color: var(--text-dark); display: flex; justify-content: center; gap: 15px; font-weight: bold;">
+                                <span id="profile-align-display">⚖️ Neutre</span>
+                                <span style="opacity: 0.5;">•</span>
+                                <span id="profile-success-display">🏆 0 Succès</span>
+                            </div>
+                            <button type="button" class="btn-frames-gallery-burger" id="btn-open-frames-showcase" title="Personnaliser ma bordure d'avatar">
+                                <i class="fas fa-sliders-h"></i> Personnaliser ma bordure
+                            </button>
+                        </div>
+
+                        <!-- Update Profile Form -->
+                        <form class="medieval-form" id="profile-update-form">
+                            <div class="form-group-row">
+                                <div class="form-field">
+                                    <label for="profile-class-select">Classe</label>
+                                    <select id="profile-class-select" class="form-input-medieval" required>
+                                        <option value="Cra">Crâ</option>
+                                        <option value="Iop">Iop</option>
+                                        <option value="Feca">Féca</option>
+                                        <option value="Eniripsa">Éniripsa</option>
+                                        <option value="Sacrieur">Sacrieur</option>
+                                        <option value="Sadida">Sadida</option>
+                                        <option value="Sram">Sram</option>
+                                        <option value="Pandawa">Pandawa</option>
+                                        <option value="Ecaflip">Écaflip</option>
+                                        <option value="Enutrof">Énutrof</option>
+                                        <option value="Xelor">Xélor</option>
+                                        <option value="Osamodas">Osamodas</option>
+                                        <option value="Roublard">Roublard</option>
+                                        <option value="Zobal">Zobal</option>
+                                        <option value="Steamer">Steamer</option>
+                                        <option value="Hupper">Huppermage</option>
+                                        <option value="Ouginak">Ouginak</option>
+                                        <option value="Forgelance">Forgelance</option>
+                                    </select>
+                                </div>
+                                <div class="form-field">
+                                    <label for="profile-level-input">Niveau (1 - 200)</label>
+                                    <input type="number" id="profile-level-input" class="form-input-medieval" required min="1" max="200">
+                                </div>
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-field">
+                                    <label for="profile-success-input">Points de succès</label>
+                                    <input type="number" id="profile-success-input" class="form-input-medieval" required min="0" max="25000" placeholder="Ex: 8500">
+                                </div>
+                                <div class="form-field">
+                                    <label for="profile-align-select">Alignement</label>
+                                    <select id="profile-align-select" class="form-input-medieval" required>
+                                        <option value="Neutre">⚖️ Neutre</option>
+                                        <option value="Bontarien">💙 Bontarien</option>
+                                        <option value="Brakmarien">🔴 Brâkmarien</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="btn-group-horizontal" style="margin-top: 15px; justify-content: center; gap: 15px;">
+                                <button type="submit" class="btn-medieval"><i class="fas fa-save"></i> Enregistrer</button>
+                                <button type="button" class="btn-medieval" id="btn-signout" style="background: #7a1b24; border-color: #e74c3c; color: #fff;"><i class="fas fa-sign-out-alt"></i> Se Déconnecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION ADMINISTRATION (ADMIN DASHBOARD)
+             ============================================== -->
+        <section class="tab-content" id="tab-admin">
+            <h2 class="welcome-title-accent" style="text-align: center; margin-bottom: 30px;"><i class="fas fa-shield-alt"></i> Bureau des Officiers</h2>
+
+            <div class="history-layout">
+                <!-- Add Event Card -->
+                <div class="card-parchment">
+                    <div class="corner-ornament-tr"></div>
+                    <div class="corner-ornament-bl"></div>
+                    <div class="corner-ornament-br"></div>
+
+                    <h3 class="card-title-medieval">Créer un événement</h3>
+                    <form class="medieval-form" id="admin-create-event-form">
+                        <div class="form-field">
+                            <label for="event-title">Nom de la sortie</label>
+                            <input type="text" id="event-title" class="form-input-medieval" required placeholder="Ex: Sortie Donjon : Kralamoure">
+                        </div>
+                        <div class="form-field">
+                            <label for="event-desc">Description</label>
+                            <textarea id="event-desc" class="form-input-medieval" rows="3" required placeholder="Expliquez le but de la sortie, prérequis, etc..."></textarea>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-field">
+                                <label for="event-day">Jour (ex: 24)</label>
+                                <input type="text" id="event-day" class="form-input-medieval" required placeholder="24">
+                            </div>
+                            <div class="form-field">
+                                <label for="event-month">Mois (ex: Mai)</label>
+                                <input type="text" id="event-month" class="form-input-medieval" required placeholder="Mai">
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-field">
+                                <label for="event-time">Heure (ex: 20h30)</label>
+                                <input type="text" id="event-time" class="form-input-medieval" required placeholder="20h30">
+                            </div>
+                            <div class="form-field">
+                                <label for="event-organizer">Organisateur</label>
+                                <input type="text" id="event-organizer" class="form-input-medieval" required placeholder="Pseudo de l'admin">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-medieval btn-form-submit" style="width: 100%;"><i class="fas fa-plus-circle"></i> Publier l'événement</button>
+                    </form>
+                </div>
+
+                <!-- Recruits management list -->
+                <div class="card-velvet">
+                    <h3 class="card-title-light">Candidatures en attente</h3>
+                    <div class="news-list" id="admin-applications-list" style="max-height: 450px; overflow-y: auto; padding-right: 8px;">
+                        <!-- Dynamically populated candidate list goes here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="app-container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img class="footer-logo-img" src="assets/guild_banner.png" alt="Logo Confrérie Rosée">
+                        <span class="footer-logo-text">La Confrérie Rosée</span>
+                    </div>
+                    <p>Plus qu'une simple guilde en jeu, nous sommes une communauté soudée partageant la passion de l'univers d'Amakna. Venez fleurir avec nous !</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-target-tab="tab-home">Accueil</a></li>
+                        <li><a href="#" data-target-tab="tab-about">La guilde</a></li>
+                        <li><a href="#" data-target-tab="tab-members">Roulette</a></li>
+                        <li><a href="#" data-target-tab="tab-events">Calendrier</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Serveur</h4>
+                    <ul class="footer-links">
+                        <li class="footer-info-text"><i class="fas fa-server"></i> Dakal</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact & Réseaux</h4>
+                    <div class="footer-socials">
+                        <a href="https://discord.gg/XyA6SSfg" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 La Confrérie Rosée. Tous droits réservés. Ce site est un site de fan non-affilié à Ankama Games.</p>
+                <p>Créé avec passion par la communauté 🌸</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-out Drawer for Avatar Border Frames Showcase -->
+    <div class="frames-showcase-drawer" id="frames-showcase-drawer">
+        <div class="drawer-header">
+            <h3><i class="fas fa-paint-brush"></i> Bordures de Rangs</h3>
+            <button class="btn-close-drawer" id="btn-close-frames-showcase" aria-label="Fermer la galerie"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-body">
+            <p class="drawer-intro">Chaque grade débloque une bordure d'avatar exclusive. Équipez le style de votre choix parmi vos bordures débloquées !</p>
+            <div class="frames-list-container" id="frames-list-container">
+                <!-- Dynamically populated in app.js -->
+            </div>
+        </div>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Supabase CDN and Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
